@@ -1,5 +1,8 @@
 import os
 import itertools
+from dotenv import load_dotenv
+load_dotenv() # 显式加载环境变量，确保独立模块被导入时不会发生 Key 为 None 的 ValidationError
+
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_anthropic import ChatAnthropic
 from langgraph.prebuilt import create_react_agent
