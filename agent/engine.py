@@ -18,7 +18,7 @@ primary_llm = ChatGoogleGenerativeAI(
 # 备用模型 (Fallback): MiniMax (采用 Anthropic 兼容协议接入)
 # 当 Gemini 触发 429 限流或服务中断时，大脑将在毫秒级内自动降级到 MiniMax 引擎，业务不中断
 fallback_llm = ChatAnthropic(
-    model_name="MiniMax-M3",
+    model_name="MiniMax-M2.7",
     api_key=os.getenv("MINIMAX_API_KEY"),
     base_url="https://api.minimax.chat/anthropic",
     max_retries=1
