@@ -55,8 +55,9 @@ RULES:
 
 def get_agent():
     """
-    动态获取编译好的 Agent 实例。每次调用时会自动轮换 GOOGLE_API_KEY。
-    如果完全没有配置 GOOGLE_API_KEY，系统会自动降级将 MiniMax 作为唯一的主力模型运行。
+    动态获取编译好的 Agent 实例。
+    采用级联灾备（Cascading Failover）机制：
+    始终优先使用第一个 Google Key，只有当其失效时才尝试下一个，所有 Google Key 全军没落后，才最终启用 MiniMax 兜底。
     """
     # 如果没有配置任何 Gemini Key，直接使用 MiniMax 作为主力引擎
     if not gemini_keys:
@@ -66,17 +67,24 @@ def get_agent():
             messages_modifier=system_prompt
         )
         
-    current_key = next(key_cycle)
+    # 为每一个可用的 Gemini Key 实例化一个模型实例
+    gemini_models = [
+        ChatGoogleGenerativeAI(
+            model="gemini-2.5-flash",
+            google_api_key=key,
+            max_retries=1
+        )
+        for key in gemini_keys
+    ]
     
-    # 实例化当前请求的 Primary LLM
-    primary_llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        google_api_key=current_key,
-        max_retries=1
-    )
+    # 主力模型为第一个 Key
+    primary_llm = gemini_models[0]
     
-    # 融合灾备降级机制
-    llm = primary_llm.with_fallbacks([fallback_llm], exceptions_to_handle=[Exception])
+    # 灾备链条：后续的 Gemini Keys ➔ MiniMax 兜底
+    fallbacks = gemini_models[1:] + [fallback_llm]
+    
+    # 融合成一条链式的级联容灾链
+    llm = primary_llm.with_fallbacks(fallbacks, exceptions_to_handle=[Exception])
     
     # 动态编译并返回 Agent 实例
     return create_react_agent(
