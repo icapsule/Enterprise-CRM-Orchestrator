@@ -58,6 +58,31 @@ sequenceDiagram
 
 ---
 
+## 🛠 Developer Guide: How to Extend
+
+This project is built as an **Extensible Integration Hub**. It is designed to be easily expanded with new enterprise systems (e.g., Jira, ERPs, custom internal APIs) using a Plug-and-Play architecture.
+
+If you need to develop or extend this project, here are the key files and directories you should focus on:
+
+### 1. The Plugin Directory (`agent/plugins/`)
+This is where all external system integrations live. Each system gets its own dedicated Python file.
+- `hubspot.py`: Contains the logic for fetching data from HubSpot CRM.
+- `salesforce.py`: A mock implementation demonstrating how to connect to Salesforce.
+**To add a new integration:** Create a new file here (e.g., `jira.py`), write your Python function using the `@tool` decorator, and implement your API logic with `try-except` enterprise error handling.
+
+### 2. The Plugin Registry (`agent/plugins/registry.py`)
+This file acts as the central switchboard.
+Once you create a new plugin, you MUST import it here and add it to the `ALL_TOOLS` list. The LangGraph engine will automatically pick it up and expose it to the LLM.
+
+### 3. The Orchestration Brain (`agent/graph.py`)
+This is the core LangGraph state machine. 
+If you add a new integration, you should update the `system_prompt` in this file to provide the LLM with **Semantic Routing Rules** (e.g., "If the user asks about tickets, use the Jira tool").
+
+### 4. The Environment Template (`.env.example`)
+Always document required API keys, client secrets, and base URLs for your new plugins here to maintain configuration standardization.
+
+---
+
 ## 🚀 Quick Start Guide
 
 ### Prerequisites
