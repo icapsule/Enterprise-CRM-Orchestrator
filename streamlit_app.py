@@ -108,8 +108,9 @@ with st.sidebar:
     st.success("Salesforce Plugin: Connected (Mock)")
     
     st.markdown("---")
-    st.header("🔍 Observability")
+    st.header("🔌 Developer Console")
     st.link_button("🛠️ Open LangSmith Trace", "https://eu.smith.langchain.com")
+    st.link_button("⚡ Open API Gateway Docs", "http://localhost:8000/docs")
     
     st.markdown("---")
     st.header("💬 IM Integrations")
