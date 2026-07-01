@@ -24,29 +24,35 @@ from agent.engine import app as agent_app
 st.subheader("💡 CRM Data Insights")
 
 # 10 Suggested Demonstration Queries for Clients
-with st.expander("📋 10 Recommended Enterprise Demo Scenarios (Click to expand)"):
+with st.expander("📋 Recommended Enterprise Demo Scenarios (Click to expand)"):
+    st.markdown("### ⚡ Level 2: B2B Business Process Automation (Autonomous Agent)")
     st.markdown("""
-    Here are 10 B2B business scenarios. The first 3 demonstrate **Autonomous Task Execution (Actions)**, while the rest showcase intelligent data analysis:
+    These scenarios demonstrate the Agent's ability to **take action, make decisions, and execute multi-step workflows** (Read -> Decide -> Generate -> Write/Notify):
     
-    1. **🤖 Task Execution: B2B Lead Follow-up:**  
-       `Find our highest-value B2B lead in Salesforce, write a personalized email to them in Swedish, and schedule a CRM follow-up task.`
-       *(Agent will fetch leads -> identify Ericsson -> draft a Swedish proposal email -> call CRM Task tool)*
-       
-    2. **🤖 Multi-Step: High-Value Alerting:**  
-       `Check if we have any lead from Klarna. If their budget is over $200k, send a Slack alert to #sales-vip and schedule a follow-up task to call them tomorrow.`
-       *(Agent will fetch leads -> find Klarna -> execute Slack webhook notification -> call CRM Task tool)*
-
-    3. **🤖 Automated Integration Check:**  
-       `Check if we have a contact matching Volvo Group in HubSpot. If yes, schedule a CRM follow-up task to sync Ericsson details and alert the owner Sven Lindberg via Slack.`
-       *(Agent will call HubSpot API -> search contacts -> trigger CRM Task tool -> send Slack notification)*
-
-    4. **Pipeline Summary:** `Summarize all B2B leads currently in our Salesforce pipeline.`
-    5. **High-Value Targets:** `List all Salesforce leads with an estimated deal value greater than $200,000.`
-    6. **Hot Prospects:** `Find all 'Hot Lead' status prospects in Salesforce and show their contact emails.`
-    7. **Sales Rep Load:** `Which Salesforce leads are currently assigned to Sven Lindberg?`
-    8. **Source ROI:** `What is the total estimated value of leads generated from 'Web Inquiry'?`
-    9. **Priority Ranking:** `Rank our top 3 highest-value Salesforce leads and show their budget.`
-    10. **Total Pipeline Valuation:** `Calculate the total pipeline budget value of all Salesforce leads combined.`
+    *   **Scenario A: B2B Lead Follow-up & CRM Task creation:**  
+        `Find our highest-value B2B lead in Salesforce, write a personalized email to them in Swedish, and schedule a CRM follow-up task.`
+    *   **Scenario B: High-Value Alerting & Slack Notification:**  
+        `Check if we have any lead from Klarna. If their budget is over $200k, send a Slack alert to #sales-vip and schedule a follow-up task to call them tomorrow.`
+    *   **Scenario C: Cross-System Automated Audit:**  
+        `Check if we have a contact matching Volvo Group in HubSpot. If yes, schedule a CRM follow-up task to sync details and alert the owner Sven Lindberg via Slack.`
+    """)
+    
+    st.markdown("---")
+    
+    st.markdown("### 🔍 Level 1: CRM Data Analytics & Inquiry (RAG)")
+    st.markdown("""
+    These queries demonstrate the Agent's ability to **search, aggregate, and reason over data** from HubSpot and Salesforce:
+    
+    1. **Pipeline Summary:** `Summarize all B2B leads currently in our Salesforce pipeline.`
+    2. **High-Value Targets:** `List all Salesforce leads with an estimated deal value greater than $200,000.`
+    3. **Hot Prospects:** `Find all 'Hot Lead' status prospects in Salesforce and show their contact emails.`
+    4. **Sales Rep Load:** `Which Salesforce leads are currently assigned to Sven Lindberg?`
+    5. **Source ROI:** `What is the total estimated value of leads generated from 'Web Inquiry'?`
+    6. **Cross-System Analysis:** `Compare HubSpot contacts with Salesforce leads to see if we have any company overlaps.`
+    7. **Priority Ranking:** `Rank our top 3 highest-value Salesforce leads and show their budget.`
+    8. **Contact Validation:** `Check if we have a contact in HubSpot that matches Lars Andersson from Volvo Group.`
+    9. **Total Pipeline Valuation:** `Calculate the total pipeline budget value of all Salesforce leads combined.`
+    10. **Multilingual Email Drafting:** `Draft a professional B2B follow-up email in Swedish to Sofia Lindqvist from Klarna Bank regarding her $300,000 lead.`
     """)
 
 # Initialize chat history in session state
