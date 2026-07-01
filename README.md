@@ -117,4 +117,49 @@ Open a second terminal and run:
 ```bash
 uvicorn api.main:app --reload --port 8000
 ```
-*The API Swagger Documentation will be accessible at `http://localhost:8000/docs`.*
+*The API Swagger Documentation will be accessible at [http://localhost:8000/docs](http://localhost:8000/docs).*
+
+---
+
+## 📡 Enterprise Agent Topologies & Invocation Paths
+
+In commercial deployments, an Enterprise Integration Hub goes beyond a chat box. The core engine is decoupled to support multiple operational topologies:
+
+```mermaid
+graph TD
+    A[Enterprise Integration Hub] --> B[1. Interactive Chat / ChatOps]
+    A --> C[2. Headless API Gateway]
+    A --> D[3. Scheduled Background Worker]
+    A --> E[4. Event-Driven Reactive Agent]
+    
+    B --> B1[Slack/Teams Bot, Web Dashboard]
+    C --> C1[REST API, Webhook endpoints for CRM/ERP]
+    D --> D1[Cron jobs: Nightly sync, Daily reports]
+    E --> E1[Triggered by CRM Webhook when lead status updates]
+```
+
+1. **Interactive Chat UI / ChatOps (Employee Assistance)**: Embedded widgets in corporate dashboards or Chat bots (Slack, Microsoft Teams) for manual, ad-hoc inquiry and updates.
+2. **Headless API Gateway (System Ingestion)**: Accessing the agent programmatically via FastAPI REST API. Ideal for wrapping AI capabilities inside existing customer portals.
+3. **Scheduled Background Worker (Autonomous Auditing)**: Chronologically triggered agents (Cron) that wake up at night to crunch data, compile summaries, and email insights without human intervention.
+4. **Event-Driven Reactive Agent (Instant Action)**: Triggered by third-party system Webhooks (e.g., Salesforce lead creation) to instantly research the prospect, draft a proposal, and place it in the rep's draft folder.
+
+---
+
+## 🚀 Enterprise Roadmap & Scaling Strategy
+
+This MVP serves as the foundational block. The roadmap scales the architecture from local prototyping to full-fledged production operation:
+
+### 🏁 Phase 1: Local Single-Tenant MVP (Current State)
+* **Topology**: Single-Agent structure, using `streamlit_app.py` for visual proof-of-concept.
+* **Integrations**: HubSpot Live API and Salesforce Mock API.
+* **Resilience**: Basic Key Rotation (Round Robin) and fallback routing (Gemini ➔ MiniMax).
+
+### 🏃 Phase 2: Multi-Agent Crew & ChatOps Integration
+* **Topology**: Multi-Agent supervisor network (e.g., separating CRM Specialists, Financial Analyst, and Communications Agent).
+* **Integrations**: Replace Salesforce Mock with active API, add Sweden-specific ERP integration (e.g., **Fortnox**), and embed vector store RAG (e.g., **Confluence / SharePoint**).
+* **Channel**: Slack and MS Teams Bot integration for true ChatOps workflow.
+
+### 🏆 Phase 3: Production Scale & Event-Driven Automation
+* **Topology**: Decoupled asynchronous workers using message queues (**RabbitMQ / Kafka**) for high-concurrency request scheduling.
+* **Integrations**: Fully active Webhook and Cron scheduling for background automation.
+* **Governance**: Setup **LangSmith / Langfuse** for LLM observability (trace monitoring, cost tracking) and integrate Enterprise Single Sign-On (SSO / SAML).
