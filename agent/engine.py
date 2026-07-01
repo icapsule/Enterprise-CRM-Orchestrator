@@ -1,6 +1,6 @@
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import SystemMessage
 
@@ -15,12 +15,12 @@ primary_llm = ChatGoogleGenerativeAI(
     max_retries=1 # 快速失败，立即触发 Fallback
 )
 
-# 备用模型 (Fallback): MiniMax (采用 OpenAI 兼容协议接入)
+# 备用模型 (Fallback): MiniMax (采用 Anthropic 兼容协议接入)
 # 当 Gemini 触发 429 限流或服务中断时，大脑将在毫秒级内自动降级到 MiniMax 引擎，业务不中断
-fallback_llm = ChatOpenAI(
-    model="abab6.5g-chat",
-    openai_api_key=os.getenv("MINIMAX_API_KEY"),
-    openai_api_base="https://api.minimax.chat/v1",
+fallback_llm = ChatAnthropic(
+    model_name="MiniMax-M3",
+    api_key=os.getenv("MINIMAX_API_KEY"),
+    base_url="https://api.minimax.chat/anthropic",
     max_retries=1
 )
 
