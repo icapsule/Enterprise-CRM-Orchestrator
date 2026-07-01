@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # Load environment variables FIRST before importing any LangChain modules that require them
 load_dotenv()
 
-from agent.graph import app as agent_app
+from agent.engine import app as agent_app
 from langchain_core.messages import HumanMessage
 
 app = FastAPI(

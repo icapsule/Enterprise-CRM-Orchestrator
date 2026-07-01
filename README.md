@@ -74,7 +74,7 @@ This is where all external system integrations live. Each system gets its own de
 This file acts as the central switchboard.
 Once you create a new plugin, you MUST import it here and add it to the `ALL_TOOLS` list. The LangGraph engine will automatically pick it up and expose it to the LLM.
 
-### 3. The Orchestration Brain (`agent/graph.py`)
+### 3. The Orchestration Brain (`agent/engine.py`)
 This is the core LangGraph state machine. 
 If you add a new integration, you should update the `system_prompt` in this file to provide the LLM with **Semantic Routing Rules** (e.g., "If the user asks about tickets, use the Jira tool").
 
@@ -103,8 +103,17 @@ Always document required API keys, client secrets, and base URLs for your new pl
    ```
 
 ### Execution
-Run the Streamlit application:
+This architecture supports a dual-mode execution. You can run the interactive UI for demonstrations, and the headless API for external integrations simultaneously.
+
+**1. Run the Enterprise UI (Streamlit):**
 ```bash
 streamlit run app.py
 ```
-The Enterprise Dashboard will be accessible at `http://localhost:8501`.
+*The Enterprise Dashboard will be accessible at `http://localhost:8501`.*
+
+**2. Run the Headless API Gateway (FastAPI):**
+Open a second terminal and run:
+```bash
+uvicorn api.main:app --reload --port 8000
+```
+*The API Swagger Documentation will be accessible at `http://localhost:8000/docs`.*

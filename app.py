@@ -19,7 +19,7 @@ with st.sidebar:
 
 # 核心聊天/展示区
 from langchain_core.messages import HumanMessage
-from agent.graph import app as agent_app
+from agent.engine import app as agent_app
 
 st.subheader("💡 CRM Data Insights")
 user_input = st.chat_input("Ask the Agent (e.g., Compare recent HubSpot contacts with Salesforce leads)")

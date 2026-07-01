@@ -28,5 +28,5 @@ RULES:
 app = create_react_agent(
     llm, 
     tools=ALL_TOOLS, 
-    state_modifier=system_prompt
+    prompt=system_prompt
 )
