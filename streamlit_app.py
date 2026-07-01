@@ -5,10 +5,100 @@ import streamlit as st
 # 加载环境变量
 load_dotenv()
 
-st.set_page_config(page_title="E2E Agent AI", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="E2E Agent AI", page_icon="🦜", layout="wide")
 
-st.title("📊 E2E Agent AI - Enterprise Dashboard")
-st.markdown("Enterprise-grade Agent demonstration powered by LangGraph & Multi-System REST APIs.")
+# Inject Custom CSS to match LangSmith/LangChain website brand identity
+st.markdown(
+    """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    /* Global Font & Background */
+    html, body, [class*="css"] {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+    
+    [data-testid="stAppViewContainer"] {
+        background-color: #f8fafc !important;
+    }
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff !important;
+        border-right: 1px solid #e2e8f0 !important;
+    }
+    
+    /* Header border line */
+    [data-testid="stHeader"] {
+        background-color: rgba(248, 250, 252, 0.8) !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    /* Streamlit success/info alerts custom styling to match LangSmith panels */
+    div[data-testid="stNotification"] {
+        border-radius: 8px !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+    
+    /* Link Button Styling (LangChain Green) */
+    .stLinkButton > a {
+        background-color: #10b981 !important;
+        color: #ffffff !important;
+        border-radius: 8px !important;
+        border: none !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        padding: 0.5rem 1rem !important;
+        width: 100% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+    
+    .stLinkButton > a:hover {
+        background-color: #059669 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+    }
+
+    /* Expander styling as clean dashboard cards */
+    div[data-testid="stExpander"] {
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* Chat Input Bar */
+    [data-testid="stChatInput"] {
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Custom Brand Header (LangChain style)
+st.markdown(
+    """
+    <div style="display: flex; align-items: center; gap: 15px; margin-top: -45px; margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px;">
+        <div style="background-color: #0f172a; padding: 12px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 32px;">🦜</span>
+        </div>
+        <div>
+            <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: -0.03em;">E2E Agent AI</h1>
+            <p style="margin: 0; color: #64748b; font-size: 14px; font-weight: 450;">Enterprise-grade Agent demonstration powered by LangGraph & Multi-System REST APIs.</p>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # 侧边栏配置
 with st.sidebar:
