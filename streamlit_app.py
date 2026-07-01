@@ -19,7 +19,7 @@ with st.sidebar:
 
 # 核心聊天/展示区
 from langchain_core.messages import HumanMessage, AIMessage
-from agent.engine import app as agent_app
+from agent.engine import get_agent
 
 st.subheader("💡 CRM Data Insights")
 
@@ -84,9 +84,9 @@ if user_input:
                 # Append current user input
                 chat_history.append(HumanMessage(content=user_input))
                 
-                # Invoke LangGraph
+                # Invoke LangGraph (dynamically get agent with rotated API Key)
                 inputs = {"messages": chat_history}
-                response = agent_app.invoke(inputs)
+                response = get_agent().invoke(inputs)
                 
                 # Extract only the text content (handle Gemini block format)
                 final_reply = response["messages"][-1].content

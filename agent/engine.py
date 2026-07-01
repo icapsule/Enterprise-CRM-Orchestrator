@@ -1,4 +1,5 @@
 import os
+import itertools
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_anthropic import ChatAnthropic
 from langgraph.prebuilt import create_react_agent
@@ -7,13 +8,10 @@ from langchain_core.messages import SystemMessage
 # 1. 动态引入所有集成系统插件 (Plugin Registry)
 from agent.plugins.registry import ALL_TOOLS
 
-# 2. 编排工作流 (Enterprise-grade Resilience)
-# 主模型 (Primary): Google Gemini 2.5 Flash
-primary_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    google_api_key=os.getenv("GOOGLE_API_KEY"),
-    max_retries=1 # 快速失败，立即触发 Fallback
-)
+# 支持多 Key 轮询 (Round Robin) 机制
+# 会自动将 GOOGLE_API_KEY 按逗号切分为列表，使用 itertools.cycle 实现高效、线程安全的无缝轮替
+gemini_keys = [k.strip() for k in os.getenv("GOOGLE_API_KEY", "").split(",") if k.strip()]
+key_cycle = itertools.cycle(gemini_keys)
 
 # 备用模型 (Fallback): MiniMax (采用 Anthropic 兼容协议接入)
 # 当 Gemini 触发 429 限流或服务中断时，大脑将在毫秒级内自动降级到 MiniMax 引擎，业务不中断
@@ -23,11 +21,6 @@ fallback_llm = ChatAnthropic(
     base_url="https://api.minimax.chat/anthropic",
     max_retries=1
 )
-
-# 绑定多模型灾备链 (Failover Chain)
-# 必须显式指定 exceptions_to_handle=[Exception]，因为 Google SDK 抛出的 ResourceExhausted 异常
-# 属于 Google 独有异常，不包含在 LangChain 默认拦截的通用 API 异常中。
-llm = primary_llm.with_fallbacks([fallback_llm], exceptions_to_handle=[Exception])
 
 # 3. 语义路由指南 (Semantic Routing Prompt)
 # 针对单租户多系统的定制化场景，我们在这里强加给大模型极其明确的系统分发指令，避免模型在多系统之间迷失。
@@ -49,9 +42,27 @@ RULES:
    - Summarize the actions taken and show the drafted outreach in your final response.
 """
 
-# 4. 初始化具备多系统能力的 Agent
-app = create_react_agent(
-    llm, 
-    tools=ALL_TOOLS, 
-    prompt=system_prompt
-)
+def get_agent():
+    """
+    动态获取编译好的 Agent 实例。每次调用时会自动轮换 GOOGLE_API_KEY。
+    """
+    current_key = next(key_cycle)
+    
+    # 实例化当前请求的 Primary LLM
+    primary_llm = ChatGoogleGenerativeAI(
+        model="gemini-2.5-flash",
+        google_api_key=current_key,
+        max_retries=1
+    )
+    
+    # 融合灾备降级机制
+    # 必须显式指定 exceptions_to_handle=[Exception]，因为 Google SDK 抛出的 ResourceExhausted 异常
+    # 属于 Google 独有异常，不包含在 LangChain 默认拦截的通用 API 异常中。
+    llm = primary_llm.with_fallbacks([fallback_llm], exceptions_to_handle=[Exception])
+    
+    # 动态编译并返回 Agent 实例
+    return create_react_agent(
+        llm, 
+        tools=ALL_TOOLS, 
+        messages_modifier=system_prompt
+    )
