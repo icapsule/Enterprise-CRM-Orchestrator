@@ -54,6 +54,17 @@ if user_input:
                 
                 # 获取最后一条消息 (Agent 的回答)
                 final_reply = response["messages"][-1].content
+                
+                # If Gemini returns a structured list of blocks, extract only the text content
+                if isinstance(final_reply, list):
+                    text_parts = []
+                    for part in final_reply:
+                        if isinstance(part, dict) and "text" in part:
+                            text_parts.append(part["text"])
+                        elif isinstance(part, str):
+                            text_parts.append(part)
+                    final_reply = "\n".join(text_parts)
+                
                 st.write(final_reply)
                 
             except Exception as e:
