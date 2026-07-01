@@ -18,7 +18,7 @@ with st.sidebar:
     st.success("Salesforce Plugin: Connected (Mock)")
 
 # 核心聊天/展示区
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, AIMessage
 from agent.engine import app as agent_app
 
 st.subheader("💡 CRM Data Insights")
@@ -40,22 +40,41 @@ with st.expander("📋 10 Recommended Enterprise Demo Scenarios (Click to expand
     10. **Multilingual Email Drafting:** `Draft a professional B2B follow-up email in Swedish to Sofia Lindqvist from Klarna Bank regarding her $300,000 lead.`
     """)
 
+# Initialize chat history in session state
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display existing chat history
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
 user_input = st.chat_input("Ask the Agent...")
 
 if user_input:
+    # Display user message immediately
     st.chat_message("user").write(user_input)
     
     with st.chat_message("assistant"):
         with st.spinner("Agent is reasoning and orchestrating plugins..."):
             try:
-                # 实际调用 LangGraph
-                inputs = {"messages": [HumanMessage(content=user_input)]}
+                # Build the chat history for LangGraph memory
+                chat_history = []
+                for msg in st.session_state.messages:
+                    if msg["role"] == "user":
+                        chat_history.append(HumanMessage(content=msg["content"]))
+                    elif msg["role"] == "assistant":
+                        chat_history.append(AIMessage(content=msg["content"]))
+                
+                # Append current user input
+                chat_history.append(HumanMessage(content=user_input))
+                
+                # Invoke LangGraph
+                inputs = {"messages": chat_history}
                 response = agent_app.invoke(inputs)
                 
-                # 获取最后一条消息 (Agent 的回答)
+                # Extract only the text content (handle Gemini block format)
                 final_reply = response["messages"][-1].content
-                
-                # If Gemini returns a structured list of blocks, extract only the text content
                 if isinstance(final_reply, list):
                     text_parts = []
                     for part in final_reply:
@@ -65,7 +84,12 @@ if user_input:
                             text_parts.append(part)
                     final_reply = "\n".join(text_parts)
                 
+                # Render response
                 st.write(final_reply)
+                
+                # Save to session state history
+                st.session_state.messages.append({"role": "user", "content": user_input})
+                st.session_state.messages.append({"role": "assistant", "content": final_reply})
                 
             except Exception as e:
                 st.error(f"Agent Execution Error: {str(e)}")
