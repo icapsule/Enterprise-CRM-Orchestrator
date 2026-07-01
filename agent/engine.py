@@ -45,7 +45,16 @@ RULES:
 def get_agent():
     """
     动态获取编译好的 Agent 实例。每次调用时会自动轮换 GOOGLE_API_KEY。
+    如果完全没有配置 GOOGLE_API_KEY，系统会自动降级将 MiniMax 作为唯一的主力模型运行。
     """
+    # 如果没有配置任何 Gemini Key，直接使用 MiniMax 作为主力引擎
+    if not gemini_keys:
+        return create_react_agent(
+            fallback_llm, 
+            tools=ALL_TOOLS, 
+            messages_modifier=system_prompt
+        )
+        
     current_key = next(key_cycle)
     
     # 实例化当前请求的 Primary LLM
@@ -56,8 +65,6 @@ def get_agent():
     )
     
     # 融合灾备降级机制
-    # 必须显式指定 exceptions_to_handle=[Exception]，因为 Google SDK 抛出的 ResourceExhausted 异常
-    # 属于 Google 独有异常，不包含在 LangChain 默认拦截的通用 API 异常中。
     llm = primary_llm.with_fallbacks([fallback_llm], exceptions_to_handle=[Exception])
     
     # 动态编译并返回 Agent 实例
