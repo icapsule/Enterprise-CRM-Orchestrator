@@ -25,7 +25,9 @@ fallback_llm = ChatAnthropic(
 )
 
 # 绑定多模型灾备链 (Failover Chain)
-llm = primary_llm.with_fallbacks([fallback_llm])
+# 必须显式指定 exceptions_to_handle=[Exception]，因为 Google SDK 抛出的 ResourceExhausted 异常
+# 属于 Google 独有异常，不包含在 LangChain 默认拦截的通用 API 异常中。
+llm = primary_llm.with_fallbacks([fallback_llm], exceptions_to_handle=[Exception])
 
 # 3. 语义路由指南 (Semantic Routing Prompt)
 # 针对单租户多系统的定制化场景，我们在这里强加给大模型极其明确的系统分发指令，避免模型在多系统之间迷失。
