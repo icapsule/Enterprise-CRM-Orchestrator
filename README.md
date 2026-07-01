@@ -108,7 +108,7 @@ This architecture supports a dual-mode execution. You can run the interactive UI
 
 **1. Run the Enterprise UI (Streamlit):**
 ```bash
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 *The Enterprise Dashboard will be accessible at `http://localhost:8501`.*
 

@@ -16,9 +16,9 @@
 
 ```text
 E2EAgentAI/
-├── app.py             # [表现层入口] Streamlit 渲染与交互主循环
+├── streamlit_app.py   # [表现层入口] Streamlit 渲染与交互主循环
 ├── agent/             # [Agent逻辑区] 
-│   ├── graph.py       # LangGraph 状态图定义与节点编排
+│   ├── engine.py      # LangGraph 状态图定义与节点编排
 │   └── prompts.py     # 核心场景 Prompt 库（如销售报表场景）
 ├── mcp/               # [协议适配层]
 │   └── client.py      # 连接本地 Salesforce DX MCP Server 的客户端封装

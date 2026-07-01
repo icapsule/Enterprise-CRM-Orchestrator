@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-# Ensure the root directory is in the path so we can import from `agent/graph.py`
+# Ensure the root directory is in the path so we can import from `agent/engine.py`
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Load environment variables FIRST before importing any LangChain modules that require them
