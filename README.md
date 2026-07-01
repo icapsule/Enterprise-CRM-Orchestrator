@@ -100,8 +100,22 @@ Always document required API keys, client secrets, and base URLs for your new pl
 3. Copy the environment template and configure your keys:
    ```bash
    cp .env.example .env
-   # Edit .env to add your GOOGLE_API_KEY and HUBSPOT_ACCESS_TOKEN
+   # Edit .env to add:
+   # - GOOGLE_API_KEY (supports multiple vertical keys for load balancing, e.g. GOOGLE_API_KEY_2, GOOGLE_API_KEY_3)
+   # - HUBSPOT_ACCESS_TOKEN (for CRM integration)
+   # - MINIMAX_API_KEY (for fallback failover routing)
+   # - LANGCHAIN_API_KEY (for LangSmith observability dashboard)
    ```
+
+### 🔍 Monitoring & Observability (LangSmith)
+To enable real-time execution tracing, cost analysis, and prompt debugging, configure the LangSmith integration in your `.env` file:
+```env
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT=https://eu.api.smith.langchain.com # Use 'https://api.smith.langchain.com' for US region
+LANGCHAIN_API_KEY=lsv2_pt_xxxxxx
+LANGCHAIN_PROJECT=E2E-Agent-Demo
+```
+*Once configured, every agent run will silently and asynchronously stream its execution graph steps directly to your LangSmith web console.*
 
 ### Execution
 This architecture supports a dual-mode execution. You can run the interactive UI for demonstrations, and the headless API for external integrations simultaneously.
