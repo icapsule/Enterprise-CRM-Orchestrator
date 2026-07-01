@@ -177,3 +177,30 @@ This MVP serves as the foundational block. The roadmap scales the architecture f
 * **Topology**: Decoupled asynchronous workers using message queues (**RabbitMQ / Kafka**) for high-concurrency request scheduling.
 * **Integrations**: Fully active Webhook and Cron scheduling for background automation.
 * **Governance**: Setup **LangSmith / Langfuse** for LLM observability (trace monitoring, cost tracking) and integrate Enterprise Single Sign-On (SSO / SAML).
+
+---
+
+## 🔮 Future Scalability: Deep Agents (Long-Horizon Autonomous Planning)
+
+While the current architecture is optimized for **low-latency, reactive routing** (handling CRM queries and quick webhook alert executions), the next frontier of enterprise integration requires **cognitive depth**. 
+
+To scale from a *conversational integration hub* to a *fully autonomous digital employee*, the system can natively transition to the **Deep Agents** pattern (built on LangGraph):
+
+```mermaid
+graph TD
+    User[User / System Trigger] --> Agent[Main Orchestrator Agent]
+    Agent --> Planner[1. Planning Loop / Todo Writer]
+    Planner --> SubAgents[2. Spawning Sub-Agents / CRM, Audit, Dev]
+    SubAgents --> Sandbox[3. Local Filesystem Sandbox / Write Reports, Code]
+    Sandbox --> Middleware[4. Memory & Context Middleware]
+```
+
+### Key Architectural Enhancements of Deep Agents:
+1. **Long-Horizon Planning & Todo Checks**: Instead of answering immediately, the agent utilizes a planning loop (via a `write_todos` tool). It writes its plan to a state list, updates progress at every node, and performs checks to prevent hallucination cycles on long tasks (e.g. overnight reports).
+2. **Sub-Agent Delegation**: For multi-step enterprise workflows (e.g., executing a full customer account transition), the main orchestrator spawns isolated sub-agents with narrow prompt contexts (e.g., a "GDPR Compliance Agent" and a "Financial Reconciliation Agent") to execute parallel sub-tasks and report back.
+3. **Sandboxed Workspaces (Filesystem Access)**: Grants the agent access to a secure, containerized local or remote directory where it can read, write, and execute scripts (e.g. dynamically querying a complex DB, refactoring localized Python integration adapters, or compiling PDF quarterly business reviews).
+4. **Context Window Compression**: Integrates background memory middlewares that summarize long tool outputs (such as massive CSV reports) and cache historical trace states to prevent context window explosion and reduce API costs.
+
+### Target B2B Use Cases:
+* **Automated Swedish Accounting Reconciliation**: Spawning sub-agents to read PDFs from Fortnox, cross-reference invoices against banks, compile Excel reconciliation reports, and write them to the company share drive.
+* **Autonomous Sales Prospecting & Outreach**: Searching Swedish registries, compiling a 5-page PDF prospect report, drafting localized outbound emails, and saving them to drafts.
