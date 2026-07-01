@@ -1,5 +1,7 @@
 import os
+# pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
+# pyrefly: ignore [missing-import]
 import streamlit as st
 
 # 加载环境变量
@@ -109,8 +111,8 @@ with st.sidebar:
     
     st.markdown("---")
     st.header("🔌 Developer Console")
-    st.link_button("🛠️ Open LangSmith Trace", "https://eu.smith.langchain.com")
-    st.link_button("⚡ Open API Gateway Docs", "http://localhost:8000/docs")
+    st.link_button("🛠️ LangSmith Trace Dashboard", "https://eu.smith.langchain.com")
+    st.link_button("⚡ API Playground (Swagger)", "http://localhost:8000/docs")
     
     st.markdown("---")
     st.header("💬 IM Integrations")
