@@ -16,6 +16,16 @@ with st.sidebar:
     st.success("LangGraph Core: Ready")
     st.success("HubSpot Plugin: Connected")
     st.success("Salesforce Plugin: Connected (Mock)")
+    
+    st.markdown("---")
+    st.header("🔍 Observability")
+    st.link_button("🛠️ Open LangSmith Trace", "https://eu.smith.langchain.com")
+    
+    st.markdown("---")
+    st.header("💬 IM Integrations")
+    st.info("MS Teams (To be developed)")
+    st.info("Slack Bot (To be developed)")
+    st.info("Telegram Bot (To be developed)")
 
 # 核心聊天/展示区
 from langchain_core.messages import HumanMessage, AIMessage
