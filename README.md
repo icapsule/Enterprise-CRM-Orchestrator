@@ -11,6 +11,7 @@ This project is a Minimum Viable Product (MVP) designed to validate an **End-to-
 The architecture is built upon industry-standard, production-ready frameworks, emphasizing modularity, security, and scalability.
 
 - **Frontend / UI:** [Streamlit](https://streamlit.io/) (Provides a responsive, chat-based Enterprise Dashboard)
+- **API Gateway:** [FastAPI](https://fastapi.tiangolo.com/) (Exposes a headless REST API with auto-generated Swagger UI interactive documentation at `/docs`)
 - **Orchestration Engine:** [LangGraph](https://python.langchain.com/docs/langgraph/) (Handles stateful multi-agent workflows and Tool Calling cycles)
 - **LLM Foundation:** [Google Gemini 2.5 Flash](https://ai.google.dev/) (Chosen for its extreme speed and state-of-the-art native tool-calling capabilities)
 - **Data Source:** [HubSpot REST API](https://developers.hubspot.com/) (Live CRM backend)
