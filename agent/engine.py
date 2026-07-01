@@ -9,8 +9,19 @@ from langchain_core.messages import SystemMessage
 from agent.plugins.registry import ALL_TOOLS
 
 # 支持多 Key 轮询 (Round Robin) 机制
-# 会自动将 GOOGLE_API_KEY 按逗号切分为列表，使用 itertools.cycle 实现高效、线程安全的无缝轮替
-gemini_keys = [k.strip() for k in os.getenv("GOOGLE_API_KEY", "").split(",") if k.strip()]
+# 同时支持单行逗号分隔，以及更优雅的竖向多行配置（GOOGLE_API_KEY, GOOGLE_API_KEY_2, GOOGLE_API_KEY_3...）
+gemini_keys = []
+if os.getenv("GOOGLE_API_KEY"):
+    gemini_keys.extend([k.strip() for k in os.getenv("GOOGLE_API_KEY").split(",") if k.strip()])
+
+# 自动扫描并追加 GOOGLE_API_KEY_2 到 GOOGLE_API_KEY_10 的竖向配置
+for i in range(2, 11):
+    val = os.getenv(f"GOOGLE_API_KEY_{i}")
+    if val:
+        gemini_keys.append(val.strip())
+
+# 去重并保持顺序
+gemini_keys = list(dict.fromkeys(gemini_keys))
 key_cycle = itertools.cycle(gemini_keys)
 
 # 备用模型 (Fallback): MiniMax (采用 Anthropic 兼容协议接入)
