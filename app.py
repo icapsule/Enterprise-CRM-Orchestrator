@@ -22,7 +22,25 @@ from langchain_core.messages import HumanMessage
 from agent.engine import app as agent_app
 
 st.subheader("💡 CRM Data Insights")
-user_input = st.chat_input("Ask the Agent (e.g., Compare recent HubSpot contacts with Salesforce leads)")
+
+# 10 Suggested Demonstration Queries for Clients
+with st.expander("📋 10 Recommended Enterprise Demo Scenarios (Click to expand)"):
+    st.markdown("""
+    Here are 10 typical B2B business scenarios you can copy and ask the Agent to demonstrate its intelligence:
+    
+    1. **Pipeline Summary:** `Summarize all B2B leads currently in our Salesforce pipeline.`
+    2. **High-Value Targets:** `List all Salesforce leads with an estimated deal value greater than $200,000.`
+    3. **Hot Prospects:** `Find all 'Hot Lead' status prospects in Salesforce and show their contact emails.`
+    4. **Sales Rep Load:** `Which Salesforce leads are currently assigned to Sven Lindberg?`
+    5. **Source ROI:** `What is the total estimated value of leads generated from 'Web Inquiry'?`
+    6. **Cross-System Analysis:** `Compare HubSpot contacts with Salesforce leads to see if we have any company overlaps.`
+    7. **Priority Ranking:** `Rank our top 3 highest-value Salesforce leads and show their budget.`
+    8. **Contact Validation:** `Check if we have a contact in HubSpot that matches Lars Andersson from Volvo Group.`
+    9. **Total Pipeline Valuation:** `Calculate the total pipeline budget value of all Salesforce leads combined.`
+    10. **Multilingual Email Drafting:** `Draft a professional B2B follow-up email in Swedish to Sofia Lindqvist from Klarna Bank regarding her $300,000 lead.`
+    """)
+
+user_input = st.chat_input("Ask the Agent...")
 
 if user_input:
     st.chat_message("user").write(user_input)
