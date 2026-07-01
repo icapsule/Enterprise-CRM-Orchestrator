@@ -67,7 +67,7 @@ def get_agent():
         return create_react_agent(
             fallback_llm, 
             tools=ALL_TOOLS, 
-            messages_modifier=system_prompt
+            prompt=system_prompt
         )
         
     # 为每一个可用的 Gemini Key 实例化一个模型实例
@@ -93,5 +93,5 @@ def get_agent():
     return create_react_agent(
         llm, 
         tools=ALL_TOOLS, 
-        messages_modifier=system_prompt
+        prompt=system_prompt
     )
