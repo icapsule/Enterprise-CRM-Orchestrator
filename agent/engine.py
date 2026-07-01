@@ -1,17 +1,31 @@
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import SystemMessage
 
 # 1. 动态引入所有集成系统插件 (Plugin Registry)
 from agent.plugins.registry import ALL_TOOLS
 
-# 2. 编排工作流
-# 使用 Google Gemini 2.5 Flash (目前最新的主力模型)
-llm = ChatGoogleGenerativeAI(
+# 2. 编排工作流 (Enterprise-grade Resilience)
+# 主模型 (Primary): Google Gemini 2.5 Flash
+primary_llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
-    google_api_key=os.getenv("GOOGLE_API_KEY")
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    max_retries=1 # 快速失败，立即触发 Fallback
 )
+
+# 备用模型 (Fallback): MiniMax (采用 OpenAI 兼容协议接入)
+# 当 Gemini 触发 429 限流或服务中断时，大脑将在毫秒级内自动降级到 MiniMax 引擎，业务不中断
+fallback_llm = ChatOpenAI(
+    model="abab6.5g-chat",
+    openai_api_key=os.getenv("MINIMAX_API_KEY"),
+    openai_api_base="https://api.minimax.chat/v1",
+    max_retries=1
+)
+
+# 绑定多模型灾备链 (Failover Chain)
+llm = primary_llm.with_fallbacks([fallback_llm])
 
 # 3. 语义路由指南 (Semantic Routing Prompt)
 # 针对单租户多系统的定制化场景，我们在这里强加给大模型极其明确的系统分发指令，避免模型在多系统之间迷失。
