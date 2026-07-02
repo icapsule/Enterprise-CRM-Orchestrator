@@ -2,6 +2,18 @@
 
 > An enterprise-grade, autonomous AI Agent architecture demonstrating dynamic tool-calling and real-time CRM data reasoning.
 
+## 🚀 Latest Release (v1.1.0 "Omni-Aware")
+> *"Moving from raw cognitive generation to an observable, multi-modal interface matrix."*
+
+This release transforms the E2E Agent from a headless cognitive engine into an Enterprise-grade observability and interaction hub, strictly adhering to the AgentCore Dual-Doc Protocol.
+- **👁️ The Panopticon (Developer Console)**: Ripped open the black box. The Streamlit sidebar now integrates direct hooks into the Agent's nervous system:
+  - **LangSmith Trace Dashboard**: One-click synaptic tracing to watch the Agent's Chain of Thought (CoT).
+  - **API Playground (Swagger)**: Exposed the raw OpenAPI schema to inject commands directly into the FastAPI sensory node.
+- **🎨 Aesthetic Alignment**: Fully recompiled the visual matrix to the **LangChain Brand Protocol** (Inter typography, deep slate headers, Mint Green `#10b981` action nodes).
+- **📡 Synaptic Expansions**: Prepared IM connector sandboxes for Microsoft Teams, Slack, and Telegram autonomous delivery.
+- **📚 Memory Alignment**: Enforced AgentCore ADR Ecosystem, permanently migrating scattered specs (`PRD`, `PROJECT_SPEC`) into the `/docs/` memory bank.
+
+
 ## 📌 Executive Summary
 
 This project is a Minimum Viable Product (MVP) designed to validate an **End-to-End (E2E) AI Agent pipeline**. It connects a modern chat interface with a powerful Large Language Model (LLM) orchestration engine, enabling the AI to autonomously fetch, analyze, and render live customer data from an external CRM system (HubSpot) using REST APIs.
