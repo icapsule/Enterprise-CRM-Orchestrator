@@ -5,11 +5,23 @@
 
 ---
 
-## 1. 🌌 项目愿景 (Project Vibe & Vision)
+## 1. 🌌 项目愿景与交付模型 (Project Vibe, Vision & 24h Sprint Model)
 
-- **核心目标**: 在 24 小时内打造一个真正的企业级 E2E (End-to-End) Agent 演示 MVP。核心打通 "HubSpot 数据层 -> LangGraph Agent -> Streamlit 可视化" 的完整链路。
+- **核心目标**: 在 24 小时极限窗口内打造一个可演示的企业级 E2E (End-to-End) Agent 演示 MVP。核心打通 "多源 CRM 数据层 -> LangGraph 状态机 -> Streamlit 可视化" 的完整链路。
 - **情绪基调 (Vibe)**: 务实、极速交付、企业级、数据驱动 (Data-driven)、技术硬核。
-- **核心用户画像**: 需要快速验证 AI Agent 在企业真实数据环境（如 CRM 销售流水线）中流转能力的架构师及 B 端产品经理。
+- **核心用户画像**: 需要快速验证 AI Agent 在企业真实数据环境（如 CRM 销售流水线）中流转能力的架构师、Tech Lead 及 B 端业务主管。
+- **24 小时交付时间预算与节奏表 (Sprint Budget)**:
+
+| 阶段 | 预计耗时 | 交付物与产出 |
+| :--- | :---: | :--- |
+| **数据层搭建** | 2-3h | Salesforce Dev Org 示例数据 + HubSpot REST 凭证对接 |
+| **Agent 核心编排** | 3-4h | LangGraph ReAct 状态循环 + 双模型容灾链构建 |
+| **场景与 Prompt 调优** | 2-3h | B2B 潜客审计、外联撰写与多动作连环调用指令集 |
+| **表现层 (Dashboard)** | 3-4h | Streamlit 企业级深色/Emerald 质感控制台 |
+| **联合调试与录制** | 2h | 完整自动化演示链路验证与 Live Demo 录像 |
+| **总计** | **12-16h** | **单人单日极速冲刺交付闭环** |
+
+- **执行铁律（核心哲学）**: **“先打通单条核心链路，再做多源横向扩展；砍范围比赶进度更重要。”** 严禁在主流程未闭环前同时并行多源复杂集成。
 
 ## 2. 🎭 人机分工与协作边界 (Human-AI Division of Labor)
 

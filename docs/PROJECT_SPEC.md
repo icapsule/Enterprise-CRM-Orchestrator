@@ -5,12 +5,22 @@
 
 ---
 
-## 1. 🛠 核心技术栈 (Tech Stack & Core Dependencies)
+## 1. 🛠 核心技术栈与选型论证 (Tech Stack & Tool Selection Matrix)
 
 - **表现层 (Frontend / UI)**: Streamlit (基于 Python 生态，追求极致的一天内 Dashboard 开发效率)
 - **Agent 框架 (Agentic Layer)**: LangGraph + 原生 LangChain Tools
-- **数据层 (Data & Knowledge)**: HubSpot CRM
-- **数据集成协议**: 原生 REST API (基于 Private App Access Token)
+- **数据层 (Data & Knowledge)**: HubSpot CRM (REST API) + Salesforce CRM (Mock / DX MCP)
+- **数据集成协议**: 原生 REST API (基于 Private App Access Token) + MCP 标准协议适配
+
+### 选型决策论证矩阵 (Evaluation & Rationale)
+
+| 架构层级 | 选型结果 | 核心选型考量与替代方案对比 (Trade-offs) |
+| :--- | :--- | :--- |
+| **数据层 (CRM)** | **Salesforce Dev Edition** | 永久免费，自带官方 DX MCP 本地 stdio 支持，预置开箱即用的商机与线索数据。 |
+| **数据层 (Marketing)** | **HubSpot Free CRM** | 公开 REST API 规范，轻量直接，通过 Private App 即可快速打通，作为多源对比最佳对照组。 |
+| **知识库 (RAG)** | **Chroma (本地向量库)** | 本地轻量化向量数据库，搭配 3-5 份企业 PDF 即可在 1 小时内搭好验证，足够支撑演示场景。 |
+| **Agent 状态机** | **LangGraph + MCP** | **为何不用 OpenManus？** 生态尚不成熟，缺乏严格企业级控制力，现场 Demo 极易失控翻车。<br/>**为何不用 Dify？** 低代码拖拽虽快，但缺乏对 Prompt 状态通道、异常重试与双模型级联容灾的代码级自由控制力。<br/>**最终选择 LangGraph**：状态可完全编程，文档与社区成熟，原生适配 ReAct 闭环与 MCP Client。 |
+| **交互表现层** | **Streamlit** | Python 生态极速交付首选，单人单日内可构建出具备专业质感的企业级可视化控制台。 |
 
 ## 2. 🗺 架构拓扑树 (Architecture Topology)
 
@@ -40,11 +50,13 @@ Enterprise-CRM-Orchestrator/
 - **Agent State (LangGraph)**:
   - 必须维护严格的 `TypedDict`，包含当前用户的对话上下文、MCP 调用返回的原始 CRM 数据、以及供 Streamlit 消费的图表配置项（结构化 JSON）。
 
-## 5. 🛡 架构级安全防御 (Security Redlines)
+## 5. 🛡 架构级安全防御与风险红线 (Security Redlines & Risk Controls)
 
 - **本地服务边界**: Salesforce DX MCP Server 必须通过安全的本地 stdio 通信，禁止随意在公网暴露 HTTP/WebSocket 的 MCP 服务端口。
-- **凭证隔离**: 本地执行 Salesforce CLI 所需的 Session / Token 依赖操作系统级 Keychain 或环境变量，禁止硬编码在 Python 脚本中。
+- **凭证隔离**: 本地执行 Salesforce CLI 所需的 Session / Token 依赖操作系统级 Keychain 或环境变量，禁止在任何代码与 Markdown 文档中硬编码账号密码或静态 Token。
 - **防止不可控的 Agent 死循环**: LangGraph 必须设定严格的 `recursion_limit`，防止由于 MCP 调用失败导致的无限重试。
+- **托管版本差异预警**: Salesforce 官方托管 Hosted MCP（GA 版）通常要求 Enterprise Edition 及以上级别，开发测试阶段推荐使用本地 DX CLI MCP Server 确保平稳可控。
+- **反贪多与范围裁剪原则**: 在企业级 MVP 阶段，坚决反对同时折腾多数据源 + 自建 RAG + 复杂多智能体体系，**砍范围比赶进度更重要**，先保证一条闭环链路 100% 稳定运行。
 
 ---
 
