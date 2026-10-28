@@ -1,4 +1,4 @@
-# 🏗 PROJECT SPEC (Technical Architecture Specification) - E2EAgentAI
+# 🏗 PROJECT SPEC (Technical Architecture Specification) - Enterprise CRM Orchestrator
 
 > **💡 Antigravity SPEC 定位声明**
 > 这是项目运行期的工程“骨架”与技术“宪法”。它是最高级指令区，专门服务于 AI Agent (如下一代代码生成模型)。它必须极其精确、无废话、强约束，确保历经数百次自动迭代后，系统架构不产生丝毫的熵增。
@@ -15,7 +15,7 @@
 ## 2. 🗺 架构拓扑树 (Architecture Topology)
 
 ```text
-E2EAgentAI/
+Enterprise-CRM-Orchestrator/
 ├── streamlit_app.py   # [表现层入口] Streamlit 渲染与交互主循环
 ├── agent/             # [Agent逻辑区] 
 │   ├── engine.py      # LangGraph 状态图定义与节点编排

@@ -33,5 +33,11 @@ share/python-wheels/
 # Node
 node_modules/
 
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
 # Agent Scratchpad
 scratch/

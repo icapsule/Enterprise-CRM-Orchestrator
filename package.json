@@ -1,6 +1,6 @@
 {
-  "name": "e2eagentai",
-  "version": "1.0.0",
+  "name": "enterprise-crm-orchestrator",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {

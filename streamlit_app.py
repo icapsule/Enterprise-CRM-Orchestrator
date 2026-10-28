@@ -7,7 +7,7 @@ import streamlit as st
 # 加载环境变量
 load_dotenv()
 
-st.set_page_config(page_title="E2E Agent AI", page_icon="🦜", layout="wide")
+st.set_page_config(page_title="Enterprise CRM Orchestrator", page_icon="🦜", layout="wide")
 
 # Inject Custom CSS to match LangSmith/LangChain website brand identity
 st.markdown(
@@ -94,8 +94,8 @@ st.markdown(
             <span style="font-size: 32px;">🦜</span>
         </div>
         <div>
-            <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: -0.03em;">E2E Agent AI</h1>
-            <p style="margin: 0; color: #64748b; font-size: 14px; font-weight: 450;">Enterprise-grade Agent demonstration powered by LangGraph & Multi-System REST APIs.</p>
+            <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: -0.03em;">Enterprise CRM Orchestrator</h1>
+            <p style="margin: 0; color: #64748b; font-size: 14px; font-weight: 450;">Enterprise-grade Autonomous Sales Agent powered by LangGraph & Multi-System REST APIs.</p>
         </div>
     </div>
     """,

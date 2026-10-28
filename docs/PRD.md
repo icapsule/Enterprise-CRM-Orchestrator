@@ -1,4 +1,4 @@
-# 🎯 PRD (Product Requirements Document) - [Project Name]
+# 🎯 PRD (Product Requirements Document) - Enterprise CRM Orchestrator
 
 > **💡 Antigravity PRD 定位声明**
 > 这是一个基于 AI 驱动开发 (Agentic Coding) 的动态 PRD。它的核心任务是确立“人机分工框架”，清晰定义业务状态与用户故事，作为所有代码生成的最初代“单一事实来源 (Single Source of Truth)”。
@@ -51,3 +51,6 @@
 - [ ] [Idea]: 接入 HubSpot CRM (REST API) 作为多数据源演示。
 - [ ] [Idea]: 接入本地 Chroma 向量库，提供 PDF 企业知识库的 RAG 能力。
 - [ ] [Tech Debt]: 将 Streamlit 表现层替换为 Next.js 生产级 Dashboard。
+
+
+- [x] [Branding]: 仓库与架构正式命名为 Enterprise-CRM-Orchestrator（托管于 https://github.com/icapsule/Enterprise-CRM-Orchestrator ）。

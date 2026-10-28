@@ -1,6 +1,6 @@
-# E2E Enterprise Agent AI: CRM Integration MVP
+# Enterprise CRM Orchestrator
 
-> An enterprise-grade, autonomous AI Agent architecture demonstrating dynamic tool-calling and real-time CRM data reasoning.
+> An enterprise-grade autonomous AI Agent architecture demonstrating LangGraph ReAct orchestration, dynamic multi-system tool-calling, and real-time CRM data reasoning.
 
 ## 🚀 Latest Release (v1.1.0 "Omni-Aware")
 > *"Moving from raw cognitive generation to an observable, multi-modal interface matrix."*

@@ -15,9 +15,9 @@ from agent.engine import get_agent
 from langchain_core.messages import HumanMessage
 
 app = FastAPI(
-    title="E2E Agent AI Backend",
-    description="Commercial REST API for the LangGraph E2E Agent.",
-    version="1.0.0"
+    title="Enterprise CRM Orchestrator Backend",
+    description="Commercial REST API for the LangGraph Autonomous CRM Agent.",
+    version="1.1.0"
 )
 
 # Enable CORS for the future Next.js frontend

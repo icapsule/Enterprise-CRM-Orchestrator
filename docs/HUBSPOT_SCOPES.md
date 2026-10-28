@@ -1,7 +1,7 @@
 # HubSpot Private App - 权限与能力追踪 (Scope & Capabilities Tracker)
 
 > **💡 文档定位**
-> 本文档用于记录当前 E2EAgentAI 项目中，HubSpot Private App (Access Token) 所拥有的实际权限（Scopes）。
+> 本文档用于记录当前 Enterprise-CRM-Orchestrator 项目中，HubSpot Private App (Access Token) 所拥有的实际权限（Scopes）。
 > 只有在此文档中标记为 `[x]` 激活的权限，AI Agent 才能在 LangGraph 的 Tool 节点中被允许开发和调用。
 
 ## 1. 核心 CRM 基础对象权限
